@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Cửa hàng đồng hồ Cloud</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr") <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f8f8; /* Thay đổi màu nền của toàn bộ trang */
+        }
+
+        .dropdown-menu {
+            background-color: burlywood !important;
+        }
+
+        .images-icon {
+            border-radius: 40px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .dropdown-item {
+            background-color: burlywood;
+        }
+
+            .dropdown-item:hover {
+                background-color: lightgreen;
+                color: white; /* Màu xanh nhạt khi hover */
+            }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .nav-item.dropdown .dropdown-menu {
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #222;
+        }
+
+            footer p {
+                margin: 5px 0;
+                color: #ccc;
+            }
+
+        .navbar-nav {
+            justify-content: center;
+        }
+
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .card {
+            margin: 15px 0;
+        }
+
+            .card img {
+                object-fit: cover;
+                height: 200px;
+            }
+
+            .card .btn {
+                background-color: #6f4f37;
+                border: none;
+            }
+
+                .card .btn:hover {
+                    background-color: #5c3b2c;
+                }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark" style="background-color: #2c3d51;">
+        <div class="container">
+            <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                <img class="images-icon" src="@Url.Content("~/Images/logo.jpg")" alt="Logo" style="width: 100px;" />
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-center">
+                <ul class="navbar-nav flex-grow-1 text-center">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Đồng hồ Nam </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                            <li><a class="dropdown-item" href="@Url.Action("Index", "Product", new { category = "Nam" })">Sản phẩm Nam</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Special", "Product", new { category = "Nam" })">Sản phẩm đặc biệt</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Đồng hồ Nữ </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                            <li style="color: black"><a class="dropdown-item" href="@Url.Action("Index", "Product", new { category = "Nu" })">Sản phẩm Nữ</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Special", "Product", new { category = "Nu" })">Sản phẩm đặc biệt</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Cart", "Home")" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> Giỏ hàng
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Contact", "Home", new { area = "" })" class="nav-link" aria-label="Liên hệ">
+                            <i class="fas fa-phone-alt"></i> Liên hệ
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i> Tài khoản
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    @RenderBody()
+    <hr />
+    </div>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Cửa hàng đồng hồ Cloud</p>
+        <p>Địa chỉ: 126 Đường Lạc Long Quân, Quận 8, Thành phố HCM</p>
+        <p>Điện thoại: 0943 612 152</p>
+        <p>Email: lienhe@cuahangdongho.com</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

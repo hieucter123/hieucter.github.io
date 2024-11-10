@@ -1,0 +1,45 @@
+﻿@model quanlydongho.Models.SanPham
+@{
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Chi Tiết Sản Phẩm</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- Product Image -->
+        <div class="product-image">
+            @if (!string.IsNullOrEmpty(Model.HinhAnh))
+            {
+                <img src="@Url.Content("~/Images/" + Model.HinhAnh)" alt="Hình ảnh sản phẩm" class="img-fluid" style="max-width: 100%; height: auto;" />
+            }
+            else
+            {
+                <img src="~/Images/no-image.png" alt="Không có hình ảnh" class="img-fluid" style="max-width: 100%; height: auto;" />
+            }
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <!-- Product Details -->
+        <div class="product-details">
+            <h3>@Model.TenDongHo</h3>
+
+            <p><strong>Đối Tượng:</strong> @Model.DoiTuong</p>
+            <p><strong>Giá Bán Lẻ:</strong> @Model.GiaBanLe.ToString("N0") đ</p>
+            <p><strong>Danh Mục:</strong> @(Model.DanhMuc?.TenDanhMuc ?? "Không có danh mục")</p>
+            <p><strong>Mô tả:</strong> @Model.MoTa</p>
+            <div class="actions">
+                <a href="@Url.Action("EditSanPham", "Admins", new { id = Model.Ma })" class="btn btn-warning btn-sm">
+                    <i class="fa fa-pencil"></i> Chỉnh Sửa
+                </a>
+                <a href="@Url.Action("SanPhams", "Admins")" class="btn btn-secondary btn-sm">
+                    <i class="fa fa-arrow-left"></i> Quay Lại
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
