@@ -1,0 +1,57 @@
+﻿@model quanlydongho.Models.SanPham
+
+@{
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">@Model.TenDongHo</h2>
+
+    <div class="row">
+        <!-- Left Column: Product Image -->
+        <div class="col-md-6">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                {
+                    <img src="@Url.Content("~/Images/" + Model.HinhAnh)" alt="@Model.TenDongHo" class="card-img-top img-fluid rounded" style="object-fit: cover; height: 400px; width: 100%;" />
+                }
+                else
+                {
+                    <img src="~/Images/no-image.png" alt="Không có hình ảnh" class="card-img-top img-fluid rounded" style="object-fit: cover; height: 400px; width: 100%;" />
+                }
+            </div>
+        </div>
+
+        <!-- Right Column: Product Details -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@Model.TenDongHo</h4>
+                    <p class="card-text">
+                        <strong>Mô Tả:</strong> @Model.MoTa
+                    </p>
+                    <p class="card-text">
+                        <strong>Đối Tượng:</strong> @Model.DoiTuong
+                    </p>
+                    <p class="card-text">
+                        <strong>Danh Mục:</strong> @Model.DanhMuc.TenDanhMuc
+                    </p>
+                    <p class="card-text">
+                        <strong>Giá Bán Lẻ:</strong> @Model.GiaBanLe.ToString("N0") đ
+                    </p>
+
+                    <!-- Add to Cart and Back Buttons -->
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("AddToCart", "Cart", new { id = Model.Ma })" class="btn btn-primary btn-lg">
+                            <i class="fas fa-cart-plus"></i> Thêm Vào Giỏ
+                        </a>
+                        <a href="@Url.Action("Index", "SanPhams")" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-arrow-left"></i> Quay Lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
