@@ -215,6 +215,11 @@
     <Content Include="Views\Admins\DeleteSanPham.cshtml" />
     <Content Include="Views\SanPhams\Details.cshtml" />
     <Content Include="Views\SanPhams\Index.cshtml" />
+    <Content Include="Views\Admins\DanhMucs.cshtml" />
+    <Content Include="Views\Admins\CreateDanhMuc.cshtml" />
+    <Content Include="Views\Admins\DetailsDanhMuc.cshtml" />
+    <Content Include="Views\Admins\EditDanhMuc.cshtml" />
+    <Content Include="Views\Admins\DeleteDanhMuc.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
