@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Cửa hàng đồng hồ Cloud</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr") <!-- Font Awesome -->
+    @Scripts.Render("~/bundles/modernizr")
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     <style>
         body {
-            background-color: #f8f8f8; /* Thay đổi màu nền của toàn bộ trang */
+            background-color: #f8f8f8;
         }
 
         .dropdown-menu {
@@ -29,7 +29,7 @@
 
             .dropdown-item:hover {
                 background-color: lightgreen;
-                color: white; /* Màu xanh nhạt khi hover */
+                color: white;
             }
 
         .nav-item.dropdown:hover .dropdown-menu {
@@ -76,6 +76,39 @@
                 .card .btn:hover {
                     background-color: #5c3b2c;
                 }
+
+        .search-box {
+            position: relative;
+        }
+
+            .search-box input[type="text"] {
+                padding: 5px 10px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+            }
+
+            .search-box .search-icon {
+                position: absolute;
+                right: 8px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #666;
+                cursor: pointer;
+            }
+
+        /* Sửa lại form tìm kiếm */
+        .input-group {
+            max-width: 400px; /* Chiều rộng tối đa */
+        }
+
+            .input-group input[type="text"] {
+                border-right: none; /* Xóa viền phải của input */
+            }
+
+            .input-group button {
+                border-left: none; /* Xóa viền trái của button */
+                border-radius: 0 4px 4px 0; /* Cắt bo góc để khớp với input */
+            }
     </style>
 </head>
 <body>
@@ -89,19 +122,10 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-center">
                 <ul class="navbar-nav flex-grow-1 text-center">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Đồng hồ Nam </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                            <li><a class="dropdown-item" href="@Url.Action("Index", "Product", new { category = "Nam" })">Sản phẩm Nam</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("Special", "Product", new { category = "Nam" })">Sản phẩm đặc biệt</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Đồng hồ Nữ </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                            <li style="color: black"><a class="dropdown-item" href="@Url.Action("Index", "Product", new { category = "Nu" })">Sản phẩm Nữ</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("Special", "Product", new { category = "Nu" })">Sản phẩm đặc biệt</a></li>
-                        </ul>
+                    <li>
+                        <a href="@Url.Action("Index", "SanPhams")" class="nav-link">
+                            <i class="fas fa-box"></i> Sản phẩm
+                        </a>
                     </li>
                     <li>
                         <a href="@Url.Action("Cart", "Home")" class="nav-link">
@@ -113,25 +137,36 @@
                             <i class="fas fa-phone-alt"></i> Liên hệ
                         </a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("Cart", "Home")" class="nav-link">
+                            <i class="fas fa-info-circle"></i> Về chúng tôi
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i> Tài khoản
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="@Url.Action("Login", "Account")">Đăng nhập</a></li>
-                            <li><a class="dropdown-item" href="@Url.Action("Register", "Account")">Đăng ký</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Login", "KhachHangs")">Đăng nhập</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Register", "KhachHangs")">Đăng ký</a></li>
                         </ul>
                     </li>
                 </ul>
+                <!-- Form tìm kiếm -->
+                <form class="d-flex search-box ms-3" method="get" action="@Url.Action("Index", "SanPhams")">
+                    <div class="input-group">
+                        <input type="text" name="searchQuery" placeholder="Tìm kiếm..." value="@Request.QueryString["searchQuery"]" class="form-control" />
+                        <button class="btn btn-outline-secondary" type="submit" id="button-search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </nav>
 
-
-
     @RenderBody()
     <hr />
-    </div>
     <footer>
         <p>&copy; @DateTime.Now.Year - Cửa hàng đồng hồ Cloud</p>
         <p>Địa chỉ: 126 Đường Lạc Long Quân, Quận 8, Thành phố HCM</p>

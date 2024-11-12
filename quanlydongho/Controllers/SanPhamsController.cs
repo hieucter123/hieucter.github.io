@@ -15,12 +15,20 @@ namespace quanlydongho.Controllers
         private quanly db = new quanly();
 
         // GET: SanPhams
-        public ActionResult Index()
+        public ActionResult Index(string searchQuery)
         {
             var sanPhams = db.SanPhams.Include(s => s.DanhMuc);
+
+            // Nếu có từ khóa tìm kiếm, lọc các sản phẩm theo từ khóa
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                sanPhams = sanPhams.Where(s => s.TenDongHo.Contains(searchQuery) || s.DanhMuc.TenDanhMuc.Contains(searchQuery));
+            }
+
+            // Trả về danh sách sản phẩm đã được lọc
             return View(sanPhams.ToList());
         }
-
+        
         // GET: SanPhams/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,8 +43,6 @@ namespace quanlydongho.Controllers
             }
             return View(sanPham);
         }
-
-       
         protected override void Dispose(bool disposing)
         {
             if (disposing)
