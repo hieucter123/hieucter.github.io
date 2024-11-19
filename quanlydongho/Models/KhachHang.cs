@@ -2,6 +2,7 @@ namespace quanlydongho.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -17,6 +18,7 @@ namespace quanlydongho.Models
 
         [Key]
         [StringLength(50)]
+        [DisplayName("Tên khách hàng")]
         public string TK { get; set; }
 
         [Required]

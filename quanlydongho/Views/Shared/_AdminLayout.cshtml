@@ -57,14 +57,23 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <h2 class="text-center text-white">Admin Dashboard</h2>
-        <a href="@Url.Action("Index", "Admins")"><i class="fas fa-home"></i> Trang Chủ</a>
-        <a href="@Url.Action("Index", "Admins")"><i class="fas fa-user-cog"></i> Quản lý tài khoản</a>
-        <a href="@Url.Action("SanPhams", "Admins")"><i class="fas fa-cogs"></i> Quản Lý Sản Phẩm</a>
-        <a href="@Url.Action("DanhMucs", "Admins")"><i class="fas fa-tags"></i> Quản Lý Danh Mục</a>
-        <a href="@Url.Action("ManageOrders", "Admins")"><i class="fas fa-shopping-cart"></i> Quản Lý Đơn Hàng</a>
-        <a href="@Url.Action("ManageCustomers", "Admins")"><i class="fas fa-users"></i> Quản Lý Khách Hàng</a>
-        <a href="@Url.Action("Logout", "Admins")"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a>
+
+        @if (Session["Admin"] != null)  // Kiểm tra nếu người dùng đã đăng nhập
+        {
+            <a href="@Url.Action("Index", "Admins")"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="@Url.Action("Index", "Admins")"><i class="fas fa-user-cog"></i> Quản lý tài khoản admin</a>
+            <a href="@Url.Action("Index", "KhachHangs")"><i class="fas fa-users"></i> Quản Lý Khách Hàng</a>
+            <a href="@Url.Action("SanPhams", "Admins")"><i class="fas fa-cogs"></i> Quản Lý Sản Phẩm</a>
+            <a href="@Url.Action("DanhMucs", "Admins")"><i class="fas fa-tags"></i> Quản Lý Danh Mục</a>
+            <a href="@Url.Action("ManageOrders", "Admins")"><i class="fas fa-shopping-cart"></i> Quản Lý Đơn Hàng</a>
+            <a href="@Url.Action("Logout", "Admins")"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a>
+        }
+        else
+        {
+            <p class="text-white text-center">Vui lòng đăng nhập để tiếp tục.</p>
+        }
     </div>
+
 
     <!-- Content Area -->
     <div class="content-wrapper">

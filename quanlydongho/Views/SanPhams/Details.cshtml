@@ -6,52 +6,77 @@
 }
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">@Model.TenDongHo</h2>
+    <h2 class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000">@Model.TenDongHo</h2>
 
     <div class="row">
         <!-- Left Column: Product Image -->
         <div class="col-md-6">
-            <div class="card">
+            <div class="card" data-aos="fade-right" data-aos-duration="1000">
                 @if (!string.IsNullOrEmpty(Model.HinhAnh))
                 {
-                    <img src="@Url.Content("~/Images/" + Model.HinhAnh)" alt="@Model.TenDongHo" class="card-img-top img-fluid rounded" style="object-fit: cover; height: 400px; width: 100%;" />
+                    <img src="@Url.Content("~/Images/" + Model.HinhAnh)"
+                         alt="@Model.TenDongHo"
+                         class="card-img-top img-fluid rounded"
+                         style="object-fit: cover; height: 400px; width: 100%; image-rendering: crisp-edges;"
+                         srcset="@Url.Content("~/Images/" + Model.HinhAnh.Replace(".jpg", "@2x.jpg")) 2x" />
+
                 }
                 else
                 {
-                    <img src="~/Images/no-image.png" alt="Không có hình ảnh" class="card-img-top img-fluid rounded" style="object-fit: cover; height: 400px; width: 100%;" />
+                    <img src="~/Images/no-image.png" alt="Không có hình ảnh" class="card-img-top img-fluid rounded" style="object-fit: cover; height: 400px; width: 100%; transition: transform 0.3s ease-in-out;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
                 }
             </div>
         </div>
 
         <!-- Right Column: Product Details -->
         <div class="col-md-6">
-            <div class="card">
+            <div class="card" data-aos="fade-left" data-aos-duration="1000">
                 <div class="card-body">
-                    <h4 class="card-title">@Model.TenDongHo</h4>
-                    <p class="card-text">
+                    <h4 class="card-title" style="font-size: 1.5rem; font-weight: bold;" data-aos="fade-up" data-aos-duration="1500">@Model.TenDongHo</h4>
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1500">
                         <strong>Mô Tả:</strong> @Model.MoTa
                     </p>
-                    <p class="card-text">
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1500">
                         <strong>Đối Tượng:</strong> @Model.DoiTuong
                     </p>
-                    <p class="card-text">
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1500">
                         <strong>Danh Mục:</strong> @Model.DanhMuc.TenDanhMuc
                     </p>
-                    <p class="card-text">
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1500">
                         <strong>Giá Bán Lẻ:</strong> @Model.GiaBanLe.ToString("N0") đ
                     </p>
 
-                    <!-- Add to Cart and Back Buttons -->
-                    <div class="d-flex justify-content-between">
-                        <a href="@Url.Action("AddToCart", "Cart", new { id = Model.Ma })" class="btn btn-primary btn-lg">
-                            <i class="fas fa-cart-plus"></i> Thêm Vào Giỏ
-                        </a>
-                        <a href="@Url.Action("Index", "SanPhams")" class="btn btn-secondary btn-lg">
-                            <i class="fas fa-arrow-left"></i> Quay Lại
-                        </a>
-                    </div>
+                    <!-- Kiểm tra người dùng đã đăng nhập chưa -->
+                    @if (Session["User"] == null)
+                    {
+                        <!-- Nếu chưa đăng nhập, hiển thị thông báo và yêu cầu đăng nhập -->
+                        <div class="alert alert-warning" data-aos="fade-up" data-aos-duration="1500">
+                            <strong>Thông báo:</strong> Bạn cần phải <a href="@Url.Action("Login", "SanPhams")">đăng nhập</a> để sử dụng chức năng này.
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Nếu đã đăng nhập, hiển thị nút thêm vào giỏ hàng -->
+                        <div class="d-flex justify-content-between" data-aos="fade-up" data-aos-duration="1500">
+                            <a href="@Url.Action("AddToCart", "SanPhams", new { id = Model.Ma })" class="btn btn-primary btn-lg">
+                                <i class="fas fa-cart-plus"></i> Thêm Vào Giỏ
+                            </a>
+                            <a href="@Url.Action("Index", "SanPhams")" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-arrow-left"></i> Quay Lại
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Kết nối AOS (Animate On Scroll) -->
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init(); // Khởi động AOS
+    </script>
+}

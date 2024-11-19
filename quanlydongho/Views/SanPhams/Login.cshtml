@@ -1,0 +1,39 @@
+﻿@model quanlydongho.Models.KhachHang
+
+@{
+    ViewBag.Title = "Đăng Nhập";
+}
+
+<h2>Đăng Nhập</h2>
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+    <div class="form-container">
+        <div class="form-group">
+            <label for="TK">Tên Đăng Nhập</label>
+            @Html.TextBoxFor(m => m.TK, new { @class = "form-control", placeholder = "Nhập tên đăng nhập" })
+        </div>
+
+        <div class="form-group">
+            <label for="MatKhau">Mật Khẩu</label>
+            @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+        </div>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.Error
+            </div>
+        }
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+        </div>
+    </div>
+}
+
+<p class="text-center">
+    Bạn chưa có tài khoản? <a href="@Url.Action("Register", "SanPhams")">Đăng ký</a>
+</p>

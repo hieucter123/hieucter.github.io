@@ -1,40 +1,52 @@
 ﻿@model IEnumerable<quanlydongho.Models.Admin>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý Admin";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Danh Sách Admin</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MatKhau)
-        </th>
-        <th></th>
-    </tr>
+    <p>
+        @Html.ActionLink("Tạo Admin Mới", "Create", null, new { @class = "btn btn-success" })
+    </p>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MatKhau)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TaiKhoan }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TaiKhoan }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TaiKhoan })
-        </td>
-    </tr>
-}
-
-</table>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaiKhoan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MatKhau)
+                </th>
+                <th class="text-center">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaiKhoan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MatKhau)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Chi Tiết", "Details", new { id = item.TaiKhoan }, new { @class = "btn btn-info btn-sm" }) |
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.TaiKhoan }, new { @class = "btn btn-warning btn-sm" }) |
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.TaiKhoan }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Bạn có chắc chắn muốn xóa?');" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

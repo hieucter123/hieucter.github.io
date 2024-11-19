@@ -18,6 +18,11 @@ namespace quanlydongho.Controllers
         // GET: Admins
         public ActionResult Index()
         {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("Login", "Admins"); 
+            }
+
             return View(db.Admins.ToList());
         }
 
@@ -370,6 +375,139 @@ namespace quanlydongho.Controllers
             db.SaveChanges();
             return RedirectToAction("DanhMucs");
         }
+        // GET: Admins/ManageOrders
+        public ActionResult ManageOrders()
+        {
+            // Bao gồm thông tin khách hàng và sản phẩm khi lấy đơn hàng
+            var orders = db.DonHangs
+                           .Include(d => d.KhachHang)
+                           .Include(d => d.SanPham)
+                           .ToList();
+
+            return View(orders);
+        }
+        public ActionResult OrderDetails(int id)
+        {
+            var orderDetails = db.DonHangs.Where(d => d.Ma == id).ToList(); // Lấy chi tiết đơn hàng từ cơ sở dữ liệu
+            ViewBag.OrderDetails = orderDetails;
+            return View();
+        }
+        public ActionResult EditOrder(int id)
+        {
+            var order = db.DonHangs
+                          .Where(d => d.Ma == id)
+                          .FirstOrDefault();
+
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Truyền thông tin đơn hàng vào view
+            return View(order);
+        }
+
+        // POST: Admins/EditOrder/5
+        // POST: Admins/EditOrder/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOrder(int id, string TrangThai)
+        {
+            if (ModelState.IsValid)
+            {
+                // Lấy thông tin đơn hàng từ cơ sở dữ liệu
+                var order = db.DonHangs.FirstOrDefault(d => d.Ma == id);
+
+                if (order != null)
+                {
+                    // Chỉ cập nhật trạng thái
+                    order.TrangThai = TrangThai;
+
+                    db.SaveChanges(); // Lưu thay đổi
+                    TempData["SuccessMessage"] = "Cập nhật trạng thái đơn hàng thành công!";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Đơn hàng không tồn tại!";
+                }
+
+                return RedirectToAction("ManageOrders");
+            }
+
+            TempData["ErrorMessage"] = "Vui lòng kiểm tra thông tin!";
+            return RedirectToAction("EditOrder", new { id });
+        }
+
+
+
+
+        public ActionResult DeleteOrder(int id)
+        {
+            var order = db.DonHangs
+                          .Where(d => d.Ma == id)
+                          .FirstOrDefault();
+
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(order);
+        }
+
+        // POST: Admins/DeleteOrder/5
+        [HttpPost, ActionName("DeleteOrder")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteOrderConfirmed(int id)
+        {
+            var order = db.DonHangs
+                          .Where(d => d.Ma == id)
+                          .FirstOrDefault();
+
+            if (order != null)
+            {
+                // Xóa đơn hàng
+                db.DonHangs.Remove(order);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("ManageOrders");
+        }
+
+        // GET: Admins/Login
+        public ActionResult Login()
+        {
+            return View(); // Hiển thị trang đăng nhập (login.cshtml)
+        }
+
+        // POST: Admins/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(string TaiKhoan, string MatKhau)
+        {
+            var admin = db.Admins.SingleOrDefault(a => a.TaiKhoan == TaiKhoan && a.MatKhau == MatKhau);
+
+            if (admin != null)
+            {
+                // Lưu thông tin admin vào session
+                Session["Admin"] = admin;
+                return RedirectToAction("Index", "Admins"); // Redirect đến trang chính của admin
+            }
+            else
+            {
+                // Thông báo lỗi khi tài khoản hoặc mật khẩu không đúng
+                ViewBag.ErrorMessage = "Tên đăng nhập hoặc mật khẩu không đúng.";
+                return View();
+            }
+        }
+        // Thêm vào AdminsController
+        public ActionResult Logout()
+        {
+            Session["Admin"] = null;  // Xóa thông tin admin khỏi session
+            return RedirectToAction("Login", "Admins"); // Chuyển hướng về trang đăng nhập
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

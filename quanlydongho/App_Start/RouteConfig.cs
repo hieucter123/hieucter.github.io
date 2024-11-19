@@ -18,6 +18,8 @@ namespace quanlydongho
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "SanPhams", action = "Index", id = UrlParameter.Optional }
             );
+           
+
         }
     }
 }
