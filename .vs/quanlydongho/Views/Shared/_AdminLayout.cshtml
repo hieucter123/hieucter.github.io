@@ -1,0 +1,87 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            padding-top: 20px;
+        }
+
+            .sidebar a {
+                color: white;
+                padding: 10px 15px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .sidebar a:hover {
+                    background-color: #575d63;
+                }
+
+        .content-wrapper {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            color: white;
+        }
+
+            .navbar .navbar-brand {
+                color: white;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="text-center text-white">Admin Dashboard</h2>
+
+        @if (Session["Admin"] != null)  // Kiểm tra nếu người dùng đã đăng nhập
+        {
+            <a href="@Url.Action("Index", "Admins")"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="@Url.Action("Index", "Admins")"><i class="fas fa-user-cog"></i> Quản lý tài khoản admin</a>
+            <a href="@Url.Action("Index", "KhachHangs")"><i class="fas fa-users"></i> Quản Lý Khách Hàng</a>
+            <a href="@Url.Action("SanPhams", "Admins")"><i class="fas fa-cogs"></i> Quản Lý Sản Phẩm</a>
+            <a href="@Url.Action("DanhMucs", "Admins")"><i class="fas fa-tags"></i> Quản Lý Danh Mục</a>
+            <a href="@Url.Action("ManageOrders", "Admins")"><i class="fas fa-shopping-cart"></i> Quản Lý Đơn Hàng</a>
+            <a href="@Url.Action("Logout", "Admins")"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a>
+        }
+        else
+        {
+            <p class="text-white text-center">Vui lòng đăng nhập để tiếp tục.</p>
+        }
+    </div>
+
+
+    <!-- Content Area -->
+    <div class="content-wrapper">
+        @RenderBody()
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

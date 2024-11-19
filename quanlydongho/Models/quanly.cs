@@ -36,5 +36,7 @@ namespace quanlydongho.Models
                 .WithOptional(e => e.SanPham)
                 .HasForeignKey(e => e.MaSanPham);
         }
+
+        
     }
 }

@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/css/reset.css">
+    <link rel="stylesheet" href="~/Content/app.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <title>Đăng nhập Admin</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="login-box">
+            <form action="/Admins/Login" method="post" id="form-login">
+                @Html.AntiForgeryToken() <!-- Thêm token bảo mật -->
+                <h1 class="form-heading">Đăng nhập Admin</h1>
+                <div class="form-group">
+                    <i class="far fa-user"></i>
+                    <input type="text" name="TaiKhoan" class="form-input" placeholder="Tên đăng nhập" required>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-key"></i>
+                    <input type="password" name="MatKhau" class="form-input" placeholder="Mật khẩu" required>
+                    <div id="eye" class="toggle-password">
+                        <i class="far fa-eye"></i>
+                    </div>
+                </div>
+                <input type="submit" value="Đăng nhập" class="form-submit">
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript để điều khiển hiển thị/ẩn mật khẩu -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Toggle mật khẩu khi nhấn vào biểu tượng mắt
+            $('#eye').click(function () {
+                var passwordField = $('input[name="MatKhau"]');
+                var type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+                passwordField.attr('type', type);
+
+                // Chuyển đổi icon mắt (mở/đóng)
+                $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+            });
+        });
+    </script>
+</body>
+</html>

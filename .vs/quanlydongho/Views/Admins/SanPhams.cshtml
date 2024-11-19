@@ -1,0 +1,59 @@
+﻿@model IEnumerable<quanlydongho.Models.SanPham>
+@{
+    ViewBag.Title = "Quản lý Sản Phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Quản lý Sản Phẩm</h2>
+
+<p>
+    @Html.ActionLink("Thêm Sản Phẩm", "CreateSanPham", "Admins", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Tên Đồng Hồ</th>
+
+            <th>Đối Tượng</th>
+            <th>Hình Ảnh</th>
+            <th>Giá Bán Lẻ</th>
+            <th>Danh mục</th>
+            <th>Mô tả</th>
+            <th>Hành Động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenDongHo</td>
+
+                <td>@item.DoiTuong</td>
+                <td>
+                    <!-- Hiển thị hình ảnh của sản phẩm với kích thước cố định -->
+                    @if (!string.IsNullOrEmpty(item.HinhAnh))
+                    {
+                        <!-- Nếu có tên ảnh, hiển thị ảnh từ thư mục Images -->
+                        <img src="@Url.Content("~/Images/" + item.HinhAnh)" alt="Ảnh sản phẩm" style="max-width: 100px; max-height: 100px;" />
+                    }
+                    else
+                    {
+                        <!-- Nếu không có hình ảnh -->
+                        <span>Chưa có ảnh</span>
+                    }
+                </td>
+                <td>@item.GiaBanLe.ToString("N0") đ</td>
+                
+                <td>@item.DanhMuc.TenDanhMuc</td>
+                <td>@item.MoTa</td>
+                <td>
+                    <!-- Các hành động cho phép xem chi tiết, chỉnh sửa hoặc xóa sản phẩm -->
+                    @Html.ActionLink("Chi Tiết", "SanPhamDetails", "Admins", new { id = item.Ma }, new { @class = "btn btn-info btn-sm" }) |
+                    @Html.ActionLink("Chỉnh Sửa", "EditSanPham", "Admins", new { id = item.Ma }, new { @class = "btn btn-warning btn-sm" }) |
+                    @Html.ActionLink("Xóa", "DeleteSanPham", "Admins", new { id = item.Ma }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

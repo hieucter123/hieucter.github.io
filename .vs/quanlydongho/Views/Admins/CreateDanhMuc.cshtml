@@ -1,0 +1,21 @@
+﻿@model quanlydongho.Models.DanhMuc
+@{
+    ViewBag.Title = "Thêm Danh Mục";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Thêm Danh Mục</h2>
+
+@using (Html.BeginForm("CreateDanhMuc", "Admins", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenDanhMuc)
+        @Html.TextBoxFor(model => model.TenDanhMuc, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TenDanhMuc)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    @Html.ActionLink("Hủy", "DanhMucs", "Admins", null, new { @class = "btn btn-secondary" })
+}
